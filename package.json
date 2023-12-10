@@ -25,6 +25,8 @@
   },
   "dependencies": {
     "@appstack-io/arangodb": "^0.6.5",
+    "@appstack-io/authnz": "^0.1.1",
+    "@appstack-io/exceptions": "^0.1.2",
     "@nestjs/common": "^10.2.10",
     "arangojs": "^8.6.0"
   },

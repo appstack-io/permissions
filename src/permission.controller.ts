@@ -20,7 +20,7 @@ import {
   Permissions,
   PermissionValidateOneInput,
   PermissionValidateOneResult,
-} from '../../proto/interfaces';
+} from './permission.interfaces';
 import { PermissionLogic } from './permission.logic';
 import { RpcAuthAssertInternalInterceptor } from '@appstack-io/authnz';
 import {
