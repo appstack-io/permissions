@@ -1,1 +1,1 @@
-# @appstack-io/workers
+# @appstack-io/permissions

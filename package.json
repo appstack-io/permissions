@@ -1,6 +1,6 @@
 {
-  "name": "@appstack-io/workers",
-  "version": "0.0.1",
+  "name": "@appstack-io/permissions",
+  "version": "0.0.0",
   "description": "",
   "author": {
     "name": "Or Gal",
@@ -8,7 +8,7 @@
   },
   "private": false,
   "license": "GPL-3.0",
-  "repository": "https://github.com/appstack-io/workers",
+  "repository": "https://github.com/appstack-io/permissions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
