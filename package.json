@@ -17,7 +17,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "nest build",
+    "build": "nest build && rm -rf dist/tests",
     "generate-interfaces": "ts-node generate-interfaces.ts",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest -i",
