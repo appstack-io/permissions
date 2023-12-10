@@ -3,9 +3,10 @@ import {
   PermissionServiceClient,
   PermissionServiceDefinition,
 } from '@appstack-io/client';
-import { shutdownComponents } from '../../main/main';
+import { shutdownComponents } from '@appstack-io/main';
 import { v4 as uuid } from 'uuid';
-import { isE2E, runMain, useHost, usePorts } from '../../../tests/utils';
+import { isE2E, runMain, useHost, usePorts } from '@appstack-io/tests';
+import { MainModule } from './main.module';
 
 describe('Permission', () => {
   let client: PermissionServiceClient;
@@ -15,7 +16,7 @@ describe('Permission', () => {
     const host = useHost();
     const channel = createChannel(`${host}:${ports.protoInternal}`);
     client = createClient(PermissionServiceDefinition, channel);
-    if (!isE2E()) await runMain({ ports });
+    if (!isE2E()) await runMain({ privateMicroservicesModule: MainModule });
   });
 
   afterAll(async () => {
