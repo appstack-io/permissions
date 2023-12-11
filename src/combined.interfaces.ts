@@ -1,5 +1,7 @@
 import { Empty } from './google/protobuf/empty';
 
+import { Observable } from 'rxjs';
+
 export interface Permission {
   id: string;
   createdAt: number;
@@ -193,18 +195,10 @@ export interface PermissionService {
   FindWhere(request: PermissionFindWhereInput): Promise<Permission>;
   FindWhereMany(request: PermissionFindWhereManyInput): Promise<Permissions>;
   FindWhereOrStar(request: PermissionFindWhereOrStarInput): Promise<Permission>;
-  FindByPermitted(
-    request: PermissionFindByPermittedInput,
-  ): Promise<PermissionFindByPermittedResult>;
-  FindByEntity(
-    request: PermissionFindByEntityInput,
-  ): Promise<PermissionFindByEntityResult>;
-  FindAllActions(
-    request: PermissionFindAllActionsInput,
-  ): Promise<PermissionFindAllActionsResult>;
-  ValidateOne(
-    request: PermissionValidateOneInput,
-  ): Promise<PermissionValidateOneResult>;
+  FindByPermitted(request: PermissionFindByPermittedInput): Promise<PermissionFindByPermittedResult>;
+  FindByEntity(request: PermissionFindByEntityInput): Promise<PermissionFindByEntityResult>;
+  FindAllActions(request: PermissionFindAllActionsInput): Promise<PermissionFindAllActionsResult>;
+  ValidateOne(request: PermissionValidateOneInput): Promise<PermissionValidateOneResult>;
   RemoveOne(request: PermissionRemoveOneInput): Promise<Empty>;
   RemoveWhere(request: PermissionRemoveWhereInput): Promise<Empty>;
   RemoveWhereMany(request: PermissionRemoveWhereManyInput): Promise<Empty>;

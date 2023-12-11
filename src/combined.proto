@@ -1,6 +1,5 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
-
 package main;
 
 message Permission {
@@ -205,3 +204,4 @@ service PermissionService {
   rpc RemoveWhereMany (PermissionRemoveWhereManyInput) returns (google.protobuf.Empty) {}
   rpc RemoveAllActions (PermissionRemoveAllActionsInput) returns (google.protobuf.Empty) {}
 }
+

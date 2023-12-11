@@ -17,7 +17,7 @@ import {
   Permissions,
   PermissionValidateOneInput,
   PermissionValidateOneResult,
-} from './permission.interfaces';
+} from './combined.interfaces';
 import { PermissionService } from './permission.service';
 
 @Injectable()

@@ -19,7 +19,7 @@ import {
   Permissions,
   PermissionValidateOneInput,
   PermissionValidateOneResult,
-} from './permission.interfaces';
+} from './combined.interfaces';
 
 @Injectable()
 export class PermissionService implements OnModuleInit {

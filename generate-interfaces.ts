@@ -1,8 +1,9 @@
-import { generateInterfaces } from '@appstack-io/proto';
+import { combineProtos, generateInterfaces } from '@appstack-io/proto';
 import { exec } from 'child_process';
 
+combineProtos([`${__dirname}/src`], `${__dirname}/src/combined.proto`);
 exec(
-  `protoc --plugin=$(pwd)/node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=snakeToCamel=true,outputClientImpl=false -I=./src --ts_proto_out=./src permission.proto`,
+  `protoc --plugin=$(pwd)/node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=snakeToCamel=true,outputClientImpl=false -I=./src --ts_proto_out=./src combined.proto`,
   (error, stdout, stderr) => {
     if (error) {
       console.error(`Execution error: ${error.message}`);
@@ -13,8 +14,8 @@ exec(
       return;
     }
     generateInterfaces(
-      `${__dirname}/src/permission.ts`,
-      `${__dirname}/src/permission.interfaces.ts`,
+      `${__dirname}/src/combined.ts`,
+      `${__dirname}/src/combined.interfaces.ts`,
     );
   },
 );
