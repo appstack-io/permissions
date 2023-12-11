@@ -33,7 +33,7 @@
   "devDependencies": {
     "@appstack-io/main": "^0.0.11",
     "@appstack-io/proto": "^0.0.6",
-    "@appstack-io/tests": "^0.0.2",
+    "@appstack-io/tests": "^0.0.3",
     "@babel/generator": "^7.23.0",
     "@babel/parser": "^7.23.0",
     "@babel/traverse": "^7.23.2",

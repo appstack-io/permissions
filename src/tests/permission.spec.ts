@@ -5,13 +5,20 @@ import {
 } from '@appstack-io/client';
 import { shutdownComponents } from '@appstack-io/main';
 import { v4 as uuid } from 'uuid';
-import { isE2E, runMain, useHost, usePorts } from '@appstack-io/tests';
+import {
+  isE2E,
+  runMain,
+  setupArangoDb,
+  useHost,
+  usePorts,
+} from '@appstack-io/tests';
 import { MainModule } from './main.module';
 
 describe('Permission', () => {
   let client: PermissionServiceClient;
 
   beforeAll(async () => {
+    await setupArangoDb();
     const ports = await usePorts();
     const host = useHost();
     const channel = createChannel(`${host}:${ports.protoInternal}`);
