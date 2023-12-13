@@ -9,7 +9,7 @@ import { ArangodbModule } from '@appstack-io/arangodb';
   imports: [ArangodbModule],
   controllers: [PermissionController],
   providers: [PermissionService, PermissionLogic],
-  exports: [PermissionService],
+  exports: [PermissionService, PermissionController, PermissionLogic],
 })
 export class PermissionModule {
   static getDirname() {
