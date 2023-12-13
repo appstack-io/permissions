@@ -8,7 +8,7 @@ import { ArangodbModule } from '@appstack-io/arangodb';
 @Module({
   imports: [ArangodbModule],
   controllers: [PermissionController],
-  providers: [PermissionService, PermissionLogic],
+  providers: [PermissionService, PermissionLogic, PermissionController],
   exports: [PermissionService, PermissionController, PermissionLogic],
 })
 export class PermissionModule {
