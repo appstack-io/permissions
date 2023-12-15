@@ -17,5 +17,6 @@ exec(
       `${__dirname}/src/combined.ts`,
       `${__dirname}/src/combined.interfaces.ts`,
     );
+    exec(`rm ${__dirname}/src/combined.proto`);
   },
 );

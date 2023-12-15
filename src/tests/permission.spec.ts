@@ -1,34 +1,21 @@
-import { createChannel, createClient } from 'nice-grpc';
-import {
-  PermissionServiceClient,
-  PermissionServiceDefinition,
-} from '@appstack-io/client';
-import { shutdownComponents } from '@appstack-io/main';
 import { v4 as uuid } from 'uuid';
-import {
-  isE2E,
-  runMain,
-  setupArangoDb,
-  useHost,
-  usePorts,
-} from '@appstack-io/tests';
-import { MainModule } from './main.module';
+import { setupArangoDb } from '@appstack-io/tests';
+import { Test, TestingModule } from '@nestjs/testing';
+import { PermissionModule } from '../permission.module';
+import { PermissionService } from '../permission.service';
 
 describe('Permission', () => {
-  let client: PermissionServiceClient;
+  let service: PermissionService;
 
   beforeAll(async () => {
     await setupArangoDb();
-    const ports = await usePorts();
-    const host = useHost();
-    const channel = createChannel(`${host}:${ports.protoInternal}`);
-    client = createClient(PermissionServiceDefinition, channel);
-    if (!isE2E()) await runMain({ privateMicroservicesModule: MainModule });
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [PermissionModule],
+    }).compile();
+    service = module.get<PermissionService>(PermissionService);
   });
 
-  afterAll(async () => {
-    if (!isE2E()) await shutdownComponents();
-  });
+  afterAll(async () => {});
 
   test('CreateOne + FindOne', async () => {
     // Arrange
@@ -41,8 +28,8 @@ describe('Permission', () => {
     };
 
     // Act
-    const created = await client.createOne(input);
-    const found = await client.findOne({ id: created.id });
+    const created = await service.createOne(input);
+    const found = await service.findOne({ id: created.id });
 
     // Assert
     expect(found).toEqual(created);
@@ -59,8 +46,8 @@ describe('Permission', () => {
     };
 
     // Act
-    const created = await client.createOne(input);
-    const found = await client.findWhere(input);
+    const created = await service.createOne(input);
+    const found = await service.findWhere(input);
 
     // Assert
     expect(found).toEqual(created);
@@ -75,12 +62,15 @@ describe('Permission', () => {
       permittedEntityId: uuid(),
       action: '*',
     };
-    const created = await client.createOne(input);
+    const created = await service.createOne(input);
 
     // Act
-    const found = await client.findWhereMany({
-      ...input,
+    const found = await service.findWhereMany({
+      entity: input.entity,
+      entityId: input.entityId,
+      permittedEntity: input.permittedEntity,
       permittedEntityIds: [input.permittedEntityId],
+      action: input.action,
     });
 
     // Assert
@@ -96,15 +86,13 @@ describe('Permission', () => {
       permittedEntityId: uuid(),
       action: '*',
     };
-    const created = await client.createOne(input);
+    const created = await service.createOne(input);
 
     // Act
-    await client.removeOne({ id: created.id });
+    await service.removeOne({ id: created.id });
 
     // Assert
-    await expect(client.findOne({ id: created.id })).rejects.toThrow(
-      'not found',
-    );
+    expect(await service.findOne({ id: created.id })).toBeUndefined();
   });
 
   test('RemoveWhere', async () => {
@@ -116,13 +104,13 @@ describe('Permission', () => {
       permittedEntityId: uuid(),
       action: '*',
     };
-    await client.createOne(input);
+    await service.createOne(input);
 
     // Act
-    await client.removeWhere(input);
+    await service.removeWhere(input);
 
     // Assert
-    await expect(client.findWhere(input)).rejects.toThrow('not found');
+    expect(await service.findWhere(input)).toBeUndefined();
   });
 
   test('RemoveWhereMany', async () => {
@@ -134,16 +122,19 @@ describe('Permission', () => {
       permittedEntityId: uuid(),
       action: '*',
     };
-    await client.createOne(input);
+    await service.createOne(input);
 
     // Act
-    await client.removeWhereMany({
-      ...input,
+    await service.removeWhereMany({
+      entity: input.entity,
+      entityId: input.entityId,
+      permittedEntity: input.permittedEntity,
       permittedEntityIds: [input.permittedEntityId],
+      action: input.action,
     });
 
     // Assert
-    await expect(client.findWhere(input)).rejects.toThrow('not found');
+    expect(await service.findWhere(input)).toBeUndefined();
   });
 
   test('FindByPermitted', async () => {
@@ -156,7 +147,7 @@ describe('Permission', () => {
       action: '*',
     };
     for (let i = 0; i < 7; i++) {
-      await client.createOne({
+      await service.createOne({
         ...input,
         entity: uuid(),
         entityId: uuid(),
@@ -164,15 +155,15 @@ describe('Permission', () => {
     }
 
     // Act
-    const all = await client.findByPermitted({
+    const all = await service.findByPermitted({
       filter: {
         permittedEntity: input.permittedEntity,
         permittedEntityId: input.permittedEntityId,
       },
-      opts: { limit: 10 },
+      opts: { limit: 10, offset: 0 },
     });
 
     // Assert
-    expect(all.results.length).toEqual(7);
+    expect(all.length).toEqual(7);
   });
 });
