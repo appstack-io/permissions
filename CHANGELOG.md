@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.1.0 - 2023-12-15
+#### Features
+- published as a lib, not service - (4acda00) - orgal
+- published as a lib, not service - (b983043) - orgal
+#### Miscellaneous Chores
+- bump version to 0.0.5 - (46f3814) - GitHub Action
+- - -
+
 ## 0.0.5 - 2023-12-13
 #### Bug Fixes
 - combined - (1140102) - orgal
