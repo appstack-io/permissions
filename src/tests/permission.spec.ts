@@ -12,6 +12,7 @@ describe('Permission', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [PermissionModule],
     }).compile();
+    await module.init();
     service = module.get<PermissionService>(PermissionService);
   });
 
